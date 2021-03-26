@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', () => {
             //check if value is not an empty string
             if (currentVal) {
                 arr.push(currentVal); //push value to array
-                //check if we cli
+                //check if we clicked on "=", so we can give proper result in output and set variable back to false
                 if (isSignEqually) {
                     topOutput.textContent = result;
                     isSignEqually = false;
@@ -100,14 +100,24 @@ window.addEventListener('DOMContentLoaded', () => {
             currentVal += '';
             console.log(currentVal)
         } else {
-            currentVal += dot.textContent;
+            //add zeros if we pressed "." with empty value
+            if (currentVal === '') {
+                currentVal += `0${dot.textContent}`;
+            } else {
+                currentVal += dot.textContent;
+            }
+
         }
 
 
         console.log(currentVal)
     })
-
+    // "=" button need independent event listener
+    //so we can check if there is more than 2 values in array,
     calculateBtn.addEventListener('click', () => {
+        //this needed so if we click on "=" after "+""-" or another operator the value of currentVal will be empty string, so we wont do anything
+        //if user typed another value, then we execute code and pushing this value into array and calculating result, plus setting currentVal to result value 
+        //so we can continue to calculate
         if (currentVal) {
             if (arr.length > 1) {
                 isSignEqually = true;
