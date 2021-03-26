@@ -1,12 +1,15 @@
 window.addEventListener('DOMContentLoaded', () => {
     const btns = document.querySelectorAll('.calc__button-digit');
     const operators = document.querySelectorAll('.calc__button-operation'),
-          output = document.querySelector('.calc__output'),
-          dot = document.querySelector('.calc__button-dot');
+        output = document.querySelector('.calc__output'),
+        dot = document.querySelector('.calc__button-dot'),
+        topOutput = document.querySelector('.calc__output_top'),
+        calculateBtn = document.querySelector('.calc__button-calculate');
     //initialize helping variables
-    let arr = [];   //array for storing our inputs
+    let arr = []; //array for storing our inputs
     let result = 0; //set default result
     let currentVal = '0'; //set default input value
+    let isSignEqually = false; //helping variable to see if we clicked on "="
     output.textContent = currentVal;
     btns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -22,13 +25,15 @@ window.addEventListener('DOMContentLoaded', () => {
                 //check if we have more than 1 value in array, if yes then 
                 //manipulate output depending on it
                 if (arr.length > 1) {
-                    output.textContent = arr.join('') + currentVal;
+                    topOutput.textContent = arr.join('') + currentVal;
                     // console.log(output.textContent);
+                    output.textContent = currentVal;
                 } else {
+                    topOutput.textContent = currentVal;
                     output.textContent = currentVal;
                     // console.log(output.textContent)
                 }
-                
+
                 // console.log(currentVal)
             }
         })
@@ -46,6 +51,11 @@ window.addEventListener('DOMContentLoaded', () => {
             //check if value is not an empty string
             if (currentVal) {
                 arr.push(currentVal); //push value to array
+                //check if we cli
+                if (isSignEqually) {
+                    topOutput.textContent = result;
+                    isSignEqually = false;
+                }
                 currentVal = ''; //reset value
                 const target = e.target;
                 //check if there is 2 values in array
@@ -55,36 +65,31 @@ window.addEventListener('DOMContentLoaded', () => {
                     arr = [];
                     arr.push(result);
                     output.textContent = result;
+                    topOutput.textContent = result;
+                    console.log(currentVal)
                     console.log(result);
                     console.log(arr);
                 }
                 if (target.getAttribute('data-operation') === '+') {
                     arr.push('+');
-                    output.textContent += '+'
+                    topOutput.textContent += '+';
                 }
                 if (target.getAttribute('data-operation') === '/') {
                     arr.push('/');
-                    output.textContent += '/'
+                    topOutput.textContent += '/';
                 }
                 if (target.getAttribute('data-operation') === '-') {
                     arr.push('-');
-                    output.textContent += '-'
+                    topOutput.textContent += '-';
                 }
                 if (target.getAttribute('data-operation') === '*') {
                     arr.push('*');
-                    output.textContent += '*'
-                }
-                if (target.getAttribute('data-operation') === '=') {
-                    //show result, assign result to current val, so we can calculate further
-                    //and clear array
-                    output.textContent = result;
-                    // console.log(result);
-                    currentVal = result.toString();
-                    arr = [];
+                    topOutput.textContent += '*';
                 }
             }
             console.log(result);
             console.log(arr);
+            console.log(currentVal)
 
         })
     })
@@ -97,13 +102,42 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
             currentVal += dot.textContent;
         }
-        
-       
+
+
         console.log(currentVal)
     })
 
-    // console.log(currentVal);
+    calculateBtn.addEventListener('click', () => {
+        if (currentVal) {
+            if (arr.length > 1) {
+                isSignEqually = true;
+                arr.push(currentVal);
+                result = eval(arr.join(''));
+                arr = [];
+                // arr.push(result);
+                output.textContent = result;
+                topOutput.textContent += '=';
+                currentVal = result;
+                console.log(currentVal)
+                console.log(result);
+                console.log(arr);
+            }
+        }
+        // console.log(currentVal);
+        // console.log(arr);
+        // output.textContent = result;
 
+        // // console.log(result);
+
+        // arr = [];
+        // console.log(currentVal);
+        // console.log(arr);
+
+
+    })
+
+    // console.log(currentVal);
+    //clear calc
     const clear = document.querySelector('.calc__button-clear');
 
     clear.addEventListener('click', () => {
@@ -111,6 +145,7 @@ window.addEventListener('DOMContentLoaded', () => {
         arr = [];
         result = 0;
         output.textContent = result;
+        topOutput.textContent = '';
         console.log(currentVal, arr, result)
     })
 })

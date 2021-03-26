@@ -25,3 +25,8 @@
 .calc__button {
    border: 1px solid #000;
 }
+
+.calc__output_top {
+    text-align: right;
+    width: 100%;
+}
