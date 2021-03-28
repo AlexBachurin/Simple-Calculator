@@ -18,9 +18,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 // some trick, if we have pressed "=" our currentVal now equals that result and its type is 'number' , so we check it, and if it is number we reset value back to empty string
                 //so we can imediatly rewrite calculator output and start new calculations
-                if (typeof currentVal === 'number') {
-                    console.log('NUMBER')
+                // if (typeof currentVal === 'number') {
+                //     console.log('NUMBER')
+                //     currentVal = '';
+                // }
+                if (isSignEquallyPressed) {
                     currentVal = '';
+                    isSignEquallyPressed = false;
                 }
                 
                 
@@ -66,7 +70,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 arr.push(currentVal); //push value to array
                 //check if we clicked on "=", so we can give proper result in output and set variable back to false
                 if (isSignEquallyPressed) {
-                    topOutput.textContent = result;
+                    topOutput.textContent = currentVal;
                     isSignEquallyPressed = false;
                 }
                 currentVal = ''; //reset value
@@ -100,9 +104,9 @@ window.addEventListener('DOMContentLoaded', () => {
                     topOutput.textContent += '*';
                 }
             }
-            console.log(result);
-            console.log(arr);
-            console.log(currentVal)
+            // console.log(result);
+            // console.log(arr);
+            // console.log(currentVal)
 
         })
     })
@@ -194,6 +198,37 @@ window.addEventListener('DOMContentLoaded', () => {
                 output.textContent = currentVal;
             }
             
+        }
+    })
+
+    // +/-
+
+    const polarity = document.querySelector('.calc__button-changepol');
+
+    polarity.addEventListener('click', () => {
+        if (currentVal) {
+            if (parseFloat(currentVal) > 0) {
+                currentVal = -currentVal;
+                console.log(currentVal);
+                console.log(typeof currentVal);
+                if (arr.length > 1) {
+                    topOutput.textContent = arr.join('') + currentVal;
+                    output.textContent = currentVal;
+                } else {
+                    topOutput.textContent = currentVal;
+                    output.textContent = currentVal;
+                }
+            } else  {
+                currentVal = Math.abs(currentVal);
+                if (arr.length > 1) {
+                    topOutput.textContent = arr.join('') + currentVal;
+                    output.textContent = currentVal;
+                } else {
+                    topOutput.textContent = currentVal;
+                    output.textContent = currentVal;
+                }
+                console.log(currentVal)
+            }
         }
     })
 })
