@@ -18,12 +18,14 @@
 .calc__buttons-wrapper {
     display: grid;
     grid-template-columns: repeat(4, 100px);
-    grid-template-rows: repeat(4, 40px);
+    grid-template-rows: repeat(5, 40px);
     row-gap: 1px;
 }
 
 .calc__button {
    border: 1px solid #000;
+   display: grid;
+   place-items: center;
 }
 
 .calc__output_top {
