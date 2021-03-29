@@ -1,0 +1,23 @@
+{
+  "name": "simple-calculator",
+  "version": "1.0.0",
+  "description": "calc on vanilla js",
+  "main": "index.js",
+  "dependencies": {
+    "mathjs": "^9.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexBachurin/Simple-Calculator.git"
+  },
+  "author": "Alex Bachurin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexBachurin/Simple-Calculator/issues"
+  },
+  "homepage": "https://github.com/AlexBachurin/Simple-Calculator#readme"
+}
