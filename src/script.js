@@ -2,12 +2,14 @@
 
 
 window.addEventListener('DOMContentLoaded', () => {
-    const btns = document.querySelectorAll('.calc__button-digit');
-    const operators = document.querySelectorAll('.calc__button-operation'),
-        output = document.querySelector('.calc__output'),
+    const btns = document.querySelectorAll('.calc__button-digit'),
+        operators = document.querySelectorAll('.calc__button-operation'),
+        output = document.querySelector('.calc__output_bottom'),
         dot = document.querySelector('.calc__button-dot'),
         topOutput = document.querySelector('.calc__output_top'),
-        calculateBtn = document.querySelector('.calc__button-calculate');
+        calculateBtn = document.querySelector('.calc__button-calculate'),
+        polarity = document.querySelector('.calc__button-changepol'),
+        square = document.querySelector('.calc__button-square');
     //initialize helping variables
     let arr = []; //array for storing our inputs
     let result = 0; //set default result
@@ -15,10 +17,95 @@ window.addEventListener('DOMContentLoaded', () => {
     let isSignEquallyPressed = false; //helping variable to see if we clicked on "="
     let canDelete = false; //helping variable to see if we can delete or not
     output.textContent = '0';
+
+    //check for overflow
+    const isOverflown = ({
+        clientWidth,
+        clientHeight,
+        scrollWidth,
+        scrollHeight
+    }) => {
+        return scrollHeight > clientHeight || scrollWidth > clientWidth;
+    }
+
+    //helper to disable buttons
+    const disableBtns = () => {
+        const btns = document.querySelectorAll('[data-disable]');
+        console.log(btns)
+        btns.forEach(btn => {
+            btn.disabled = true;
+            btn.classList.add('disabled');
+        })
+        // operators.forEach(operBtn => {
+        //     operBtn.disabled = true;
+        //     operBtn.classList.add('disabled');
+        // })
+        // // dot.disabled = true;
+        // // dot.classList.add('disabled');
+        // calculateBtn.disabled = true;
+        // calculateBtn.classList.add('disabled');
+        // square.disabled = true;
+        // square.classList.add('disabled');
+        // polarity.disabled = true;
+        // polarity.classList.add('disabled');
+    }
+    //helper to enable buttons
+    const enableBtns = () => {
+        const btns = document.querySelectorAll('[data-disable]');
+        btns.forEach(btn => {
+            if (btn.disabled) {
+                btn.disabled = false;
+                btn.classList.remove('disabled');
+            }
+        })
+        // operators.forEach(operator => {
+        //     if (operator.disabled) {
+        //         operator.disabled = false;
+        //         operator.classList.remove('disabled')
+        //     }
+        // })
+        // if (dot.disabled) {
+        //     dot.disabled = false;
+        //     dot.classList.remove('disabled');
+        // }
+        // if (calculateBtn.disabled) {
+        //     calculateBtn.disabled = false;
+        //     calculateBtn.classList.remove('disabled');
+        // }
+        // if (square.disabled) {
+        //     square.disabled = false;
+        //     square.classList.remove('disabled');
+        // }
+        // if (polarity.disabled) {
+        //     polarity.disabled = false;
+        //     polarity.classList.remove('disabled');
+        // }
+    }
+
+
     btns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             if (e.target) {
+                // const outputs = document.querySelectorAll('.calc__output');
+
+                // outputs.forEach(output => {
+                //     if (isOverflown(output)) {
+                //         console.log('overflown')
+                //         output.style.overflow = 'scroll'
+                //     }
+                // })
+                if (isOverflown(output)) {
+                    output.style.fontSize = '20px';
+                    topOutput.style.fontSize = '14px';
+                } else {
+                    topOutput.style.fontSize = '20px';
+                    output.style.fontSize = '35px';
+                }
+
+                //enable buttons if we disabled it
+                enableBtns();
+
 
                 //reset value to empty string if we pressed "=" , so when we start pressing on buttons we can calculate new expression
                 if (isSignEquallyPressed) {
@@ -55,7 +142,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     output.textContent = currentVal;
                     // console.log(output.textContent)
                 }
-                
+
 
                 // console.log(currentVal)
             }
@@ -72,6 +159,7 @@ window.addEventListener('DOMContentLoaded', () => {
         oper.addEventListener('click', (e) => {
             //check if value is not an empty string
             if (currentVal) {
+
                 arr.push(currentVal); //push value to array
                 //check if we clicked on "=", so we can give proper result in output and set variable back to false
                 if (isSignEquallyPressed) {
@@ -85,6 +173,18 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (arr.length > 1) {
                     result = math.evaluate(arr.join(''));
                     arr = [];
+                    //check for infinity if we division zero
+                    if (!isFinite(result)) {
+                        console.log('infinity')
+                        output.style.fontSize = '20px';
+                        output.textContent = "Деление на ноль невозможно"
+                        //set operator buttons in disabled state
+                        disableBtns();
+                        currentVal = '';
+                        result = 0;
+                        return
+
+                    }
                     arr.push(result);
                     output.textContent = result;
                     topOutput.textContent = result;
@@ -117,6 +217,7 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 
     dot.addEventListener('click', () => {
+        enableBtns();
         //check if we calculated expression and if we are then reset value, so if we need we can start new calculation from pressing '.'
         if (isSignEquallyPressed) {
             currentVal = '';
@@ -163,7 +264,19 @@ window.addEventListener('DOMContentLoaded', () => {
             if (arr.length > 1) {
                 isSignEquallyPressed = true;
                 arr.push(currentVal);
-                result = math.evaluate(arr.join(''))
+                result = math.evaluate(arr.join(''));
+                //check for infinity if we division zero
+                if (!isFinite(result)) {
+                    console.log('infinity')
+                    output.style.fontSize = '20px';
+                    output.textContent = "Деление на ноль невозможно"
+                    //set operator buttons in disabled state and reset vals
+                    disableBtns();
+                    currentVal = '';
+                    result = 0;
+                    arr = [];
+                    return
+                }
                 arr = [];
                 // arr.push(result);
                 output.textContent = result;
@@ -195,6 +308,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const clear = document.querySelector('.calc__button-clear');
 
     clear.addEventListener('click', () => {
+        enableBtns();
         currentVal = '0';
         arr = [];
         result = 0;
@@ -206,10 +320,10 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 
     //square
-    const square = document.querySelector('.calc__button-square');
+
 
     square.addEventListener('click', () => {
-        if (currentVal) {
+        if (currentVal && currentVal != 0) {
             currentVal *= currentVal;
             //canDelete need to be setted in false for right work
             canDelete = false;
@@ -226,10 +340,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // +/-
 
-    const polarity = document.querySelector('.calc__button-changepol');
+
 
     polarity.addEventListener('click', () => {
-        if (currentVal) {
+        if (currentVal && currentVal != 0) {
             if (parseFloat(currentVal) > 0) {
                 currentVal = -currentVal;
                 console.log(currentVal);
@@ -260,6 +374,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     deleteBtn.addEventListener('click', () => {
         //check if we have not an empty value and we can delete
+        
         if (currentVal && canDelete) {
             console.log('click')
             //check if we have number in currentValue then transform it to string
@@ -296,4 +411,8 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
     })
+
+
+
+
 })

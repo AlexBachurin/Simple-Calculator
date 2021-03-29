@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap')
+    
+html 
+    font-family: 'Roboto' , sans-serif
+
+body 
+    background-color: #778899
+.calc
+    &__wrapper
+        box-shadow: -10px 5px 20px #000
+        display: flex
+        flex-direction: column
+        width: 280px
+        margin: 0 auto
+        background-color: gray
+        border: 1px solid #000
+        border-radius: 10px 10px 0 0
+    &__output
+        text-align: right
+        height: 60px
+        background-color: #fff
+        font-size: 35px
+        font-weight: 700
+        padding-right: 20px
+        color: #000
+        overflow: auto
+        &_top
+            border-radius: 10px 10px 0 0
+            font-weight: 400
+            height: 60px
+            padding-top: 20px
+            display: flex
+            align-items: center
+            justify-content: flex-end
+            font-size: 20px
+            overflow: auto
+    &__buttons
+        &-wrapper
+            display: grid
+            grid-template-columns: repeat(4, 70px)
+            grid-template-rows: repeat(5, 60px)
+            row-gap: 1px
+    &__button
+        color: #fff
+        background-color: rgba(0, 0, 0, 0.7)
+        border: 1px solid #708090
+        display: grid
+        place-items: center
+        outline: none
+        cursor: pointer
+        &-operation
+            background-color: #00CED1
+            font-size: 25px
+        &-calculate
+            background-color: #DAA520
+            font-size: 35px
+
+.disabled 
+    opacity: 0.2

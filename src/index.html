@@ -5,38 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
     <div class="calc__wrapper">
-        <div class="calc__output_top">
-
+        <div class="calc__output calc__output_top">
         </div>
-        <div class="calc__output">
+        <div class="calc__output calc__output_bottom">
         </div>
         <div class="calc__buttons-wrapper">
-            <div class="calc__button calc__button-clear">C</div>
-            <div class="calc__button calc__button-changepol">+/-</div>
-            <div class="calc__button calc__button-square">x^2</div>
-            <div data-operation="/" class="calc__button calc__button-operation">/</div>
-            <div class="calc__button calc__button-digit">7</div>
-            <div class="calc__button calc__button-digit">8</div>
-            <div class="calc__button calc__button-digit">9</div>
-            <div data-operation="*" class="calc__button calc__button-operation">*</div>
-            <div class="calc__button calc__button-digit">4</div>
-            <div class="calc__button calc__button-digit">5</div>
-            <div class="calc__button calc__button-digit">6</div>
-            <div data-operation="-" class="calc__button calc__button-operation">-</div>
-            <div class="calc__button calc__button-digit">1</div>
-            <div class="calc__button calc__button-digit">2</div>
-            <div class="calc__button calc__button-digit">3</div>
-            <div data-operation="+" class="calc__button calc__button-operation">+</div>
+            <button class="calc__button calc__button-clear">C</button>
+            <button data-disable = 'true' class="calc__button calc__button-changepol">+/-</button>
+            <button data-disable = 'true' class="calc__button calc__button-square">x^2</button>
+            <button data-disable = 'true' data-operation="/" class="calc__button calc__button-operation">/</button>
+            <button class="calc__button calc__button-digit">7</button>
+            <button class="calc__button calc__button-digit">8</button>
+            <button class="calc__button calc__button-digit">9</button>
+            <button data-disable = 'true' data-operation="*" class="calc__button calc__button-operation">*</button>
+            <button class="calc__button calc__button-digit">4</button>
+            <button class="calc__button calc__button-digit">5</button>
+            <button class="calc__button calc__button-digit">6</button>
+            <button data-disable = 'true' data-operation="-" class="calc__button calc__button-operation">-</button>
+            <button class="calc__button calc__button-digit">1</button>
+            <button class="calc__button calc__button-digit">2</button>
+            <button class="calc__button calc__button-digit">3</button>
+            <button data-disable = 'true' data-operation="+" class="calc__button calc__button-operation">+</button>
            
-            <div class="calc__button calc__button-digit">0</div>
-            <div class="calc__button calc__button-dot">.</div>
-            <div class="calc__button calc__button-delete">del</div>
+            <button class="calc__button calc__button-digit">0</button>
+            <button class="calc__button calc__button-dot">.</button>
+            <button data-disable = 'true' class="calc__button calc__button-delete">del</button>
             
-            <div data-operation="=" class="calc__button calc__button-calculate">=</div>
+            <button data-operation="=" class="calc__button calc__button-calculate">=</button>
             
 
         </div>
