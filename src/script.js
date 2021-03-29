@@ -281,7 +281,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 // arr.push(result);
                 output.textContent = result;
                 topOutput.textContent += '=';
-                currentVal = result;
+                currentVal = result.toString();
                 console.log(currentVal)
                 console.log(result);
                 console.log(arr);
